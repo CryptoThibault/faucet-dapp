@@ -1,8 +1,18 @@
-import { useContext } from "react"
+import { useContext, useReducer } from "react"
 import { ContractsContext } from "../contexts/ContractsContext"
+import { tokenReducer } from "../reducers/tokenReducer"
 
 export const useFarahToken = () => {
-  const [farahtoken] = useContext(ContractsContext)
+  const farahtoken = useContext(ContractsContext)
+
+  const [state, dispatch] = useReducer(tokenReducer, {
+    address: "",
+    amountToSend: 0,
+    txStatus: "",
+    sender: "",
+    recipient: "",
+    amount: 0,
+  })
 
   if (farahtoken === undefined) {
     throw new Error(
@@ -10,5 +20,5 @@ export const useFarahToken = () => {
     )
   }
 
-  return farahtoken
+  return [farahtoken, state, dispatch]
 }
