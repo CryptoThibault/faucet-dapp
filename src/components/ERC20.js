@@ -11,13 +11,13 @@ import {
   AlertIcon,
   Link,
   Checkbox,
-} from "@chakra-ui/react"
-import { ethers } from "ethers"
-import { useFarahToken } from "../hooks/useFarahToken"
-import History from "./History"
+} from "@chakra-ui/react";
+import { ethers } from "ethers";
+import { useFarahToken } from "../hooks/useFarahToken";
+import History from "./History";
 
 const ERC20 = () => {
-  const [farahtoken, tokenState, tokenDispatch] = useFarahToken()
+  const [farahtoken, tokenState, tokenDispatch] = useFarahToken();
   const {
     tokenName,
     symbol,
@@ -27,23 +27,23 @@ const ERC20 = () => {
     txStatus,
     fromTransfer,
     fromAddress,
-  } = tokenState
+  } = tokenState;
 
   const handleSendToken = async () => {
-    tokenDispatch({ type: "TX_WAITING" })
+    tokenDispatch({ type: "TX_WAITING" });
     try {
       let tx = await farahtoken.transfer(
         address,
         ethers.utils.parseEther(amountToSend.toString())
-      )
-      tokenDispatch({ type: "TX_PENDING" })
-      await tx.wait()
-      tokenDispatch({ type: "TRANSFER_SUCCESS" })
+      );
+      tokenDispatch({ type: "TX_PENDING" });
+      await tx.wait();
+      tokenDispatch({ type: "TRANSFER_SUCCESS" });
     } catch (e) {
-      console.log(e)
-      tokenDispatch({ type: "TX_FAILURE", payload: e })
+      console.log(e);
+      tokenDispatch({ type: "TX_FAILURE", payload: e });
     }
-  }
+  };
 
   return (
     <>
@@ -158,7 +158,7 @@ const ERC20 = () => {
         ""
       )}
     </>
-  )
-}
+  );
+};
 
-export default ERC20
+export default ERC20;

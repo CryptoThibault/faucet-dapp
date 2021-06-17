@@ -1,22 +1,22 @@
-import ERC20 from "./ERC20"
-import Faucet from "./Faucet"
-import Header from "./Header"
-import { useFarahToken } from "../hooks/useFarahToken"
-import { useContext } from "react"
-import { Web3Context } from "web3-hooks"
-import { Box, Alert, AlertIcon, Button, Container } from "@chakra-ui/react"
+import ERC20 from "./ERC20";
+import Faucet from "./Faucet";
+import Header from "./Header";
+import { useFarahToken } from "../hooks/useFarahToken";
+import { useContext } from "react";
+import { Web3Context } from "web3-hooks";
+import { Box, Alert, AlertIcon, Button, Container } from "@chakra-ui/react";
 
 const Dapp = () => {
-  const [farahtoken] = useFarahToken()
-  const [web3State] = useContext(Web3Context)
+  const [farahtoken] = useFarahToken();
+  const [web3State] = useContext(Web3Context);
 
   function debug() {
-    console.log(web3State.chainId)
+    console.log(web3State.chainId);
   }
 
   return (
     <>
-      <Box minH="100vh" bgGradient="linear(-45deg,#FFFFFF,#DDEEAA)">
+      <Box minH="100vh" bgGradient="linear(to-b, #FFFFFF, #DDEEAA)">
         <Header />
 
         <Container minW="90%">
@@ -40,7 +40,7 @@ const Dapp = () => {
         </Container>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Dapp
+export default Dapp;

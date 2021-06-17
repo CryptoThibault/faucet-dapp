@@ -1,9 +1,9 @@
-import { useContext } from "react"
-import { Web3Context } from "web3-hooks"
-import { Text, Box, Flex, Spacer, Container, Button } from "@chakra-ui/react"
+import { useContext } from "react";
+import { Web3Context } from "web3-hooks";
+import { Text, Box, Flex, Spacer, Container, Button } from "@chakra-ui/react";
 
 const Header = () => {
-  const [web3State, login] = useContext(Web3Context)
+  const [web3State, login] = useContext(Web3Context);
 
   //titre
 
@@ -47,7 +47,7 @@ const Header = () => {
         </Container>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
