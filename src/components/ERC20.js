@@ -1,5 +1,5 @@
 const ERC20 = () => {
-  return <></>
-}
+  return <></>;
+};
 
-export default ERC20
+export default ERC20;
