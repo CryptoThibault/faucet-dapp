@@ -5,11 +5,11 @@ import { faucetReducer } from "../reducers/faucetReducer";
 export const useFaucet = () => {
   const [, faucet] = useContext(ContractsContext);
   const [faucetState, faucetDispatch] = useReducer(faucetReducer, {
-    remainingSupply: 0,
-    timeRemaining: 0,
+    remainingSupply: "0",
+    timeRemaining: "0",
     ownerAddress: "",
     erc20Address: "",
-    amountSend: 0,
+    amountReceived: "0",
   });
   if (faucet === undefined) {
     throw new Error("You try to use ContractsContext outside of his provider");
