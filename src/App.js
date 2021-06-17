@@ -1,8 +1,11 @@
+import Dapp from "./components/Dapp"
+import ContractsContextProvider from "./contexts/ContractsContext"
+
 const App = () => {
   return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
+    <ContractsContextProvider>
+      <Dapp />
+    </ContractsContextProvider>
   )
 }
 
