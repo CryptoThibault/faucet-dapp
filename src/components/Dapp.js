@@ -12,7 +12,6 @@ const Dapp = () => {
 
   function debug() {
     console.log(web3State.chainId)
-    console.log(!!farahtoken)
   }
 
   return (

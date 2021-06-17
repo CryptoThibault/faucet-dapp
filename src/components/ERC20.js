@@ -6,13 +6,28 @@ import {
   InputGroup,
   Input,
   InputRightAddon,
+  InputLeftAddon,
+  Alert,
+  AlertIcon,
+  Link,
+  Checkbox,
 } from "@chakra-ui/react"
 import { ethers } from "ethers"
 import { useFarahToken } from "../hooks/useFarahToken"
+import History from "./History"
 
 const ERC20 = () => {
   const [farahtoken, tokenState, tokenDispatch] = useFarahToken()
-  const { address, amountToSend } = tokenState
+  const {
+    tokenName,
+    symbol,
+    decimals,
+    address,
+    amountToSend,
+    txStatus,
+    fromTransfer,
+    fromAddress,
+  } = tokenState
 
   const handleSendToken = async () => {
     tokenDispatch({ type: "TX_WAITING" })
@@ -25,6 +40,7 @@ const ERC20 = () => {
       await tx.wait()
       tokenDispatch({ type: "TRANSFER_SUCCESS" })
     } catch (e) {
+      console.log(e)
       tokenDispatch({ type: "TX_FAILURE", payload: e })
     }
   }
@@ -36,8 +52,33 @@ const ERC20 = () => {
         fontSize="2.5rem"
         as="h2"
       >
-        Interact with FarahToken (ERC20)
+        Interact with {tokenName} ({symbol})
       </Text>
+      <Text
+        textAlign={{ base: "center", xl: "start" }}
+        fontSize="1.5rem"
+        as="h3"
+        mb="1rem"
+      >
+        Token informations
+      </Text>
+      <Box
+        mb="1rem"
+        fontSize="1.2rem"
+        textAlign={{ base: "center", xl: "start" }}
+      >
+        <Text>
+          Contracts address:{" "}
+          <Link
+            isExternal
+            href={`https://etherscan.io/address/${farahtoken.address}`}
+          >
+            {farahtoken.address}
+          </Link>
+        </Text>
+        <Text>Decimals: {decimals}</Text>
+      </Box>
+      <History />
       <Text
         textAlign={{ base: "center", xl: "start" }}
         fontSize="1.5rem"
@@ -46,6 +87,30 @@ const ERC20 = () => {
       >
         Send tokens
       </Text>
+      <Flex mb="1rem">
+        <Checkbox size="lg" minW="10%">
+          Transfer From
+        </Checkbox>
+        <InputGroup>
+          <InputLeftAddon children="from:" />
+          <Input
+            value={fromAddress}
+            onChange={(e) =>
+              tokenDispatch({
+                type: "CHANGE_FROM_ADDRESS",
+                payload: e.target.value,
+              })
+            }
+            borderStart="none"
+            borderStartRadius="0"
+            maxW="20%"
+            borderEndRadius="0"
+            type="text"
+            bg="white"
+            placeholder="0x0000...000"
+          />
+        </InputGroup>
+      </Flex>
       <Flex>
         <InputGroup justifyContent={{ base: "center", xl: "start" }}>
           <Input
@@ -56,6 +121,7 @@ const ERC20 = () => {
             type="number"
             maxW="10%"
             bg="white"
+            mb="1rem"
           />
           <InputRightAddon borderEndRadius="0" children="to:" />
           <Input
@@ -71,14 +137,26 @@ const ERC20 = () => {
             bg="white"
             placeholder="0x0000...000"
           />
-          <Button onClick={handleSendToken} borderStartRadius="0">
+          <Button
+            loadingText={txStatus}
+            isLoading={
+              txStatus.startsWith("Waiting") || txStatus.startsWith("Pending")
+            }
+            onClick={handleSendToken}
+            borderStartRadius="0"
+          >
             Send
           </Button>
         </InputGroup>
       </Flex>
-      <p>
-        {amountToSend} {address}
-      </p>
+      {txStatus.startsWith("Failed") ? (
+        <Alert status="error">
+          <AlertIcon />
+          {txStatus}
+        </Alert>
+      ) : (
+        ""
+      )}
     </>
   )
 }
