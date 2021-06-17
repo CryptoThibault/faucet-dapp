@@ -20,7 +20,11 @@ export const faucetReducer = (state, action) => {
         ...state,
         timeRemaining: action.payload,
       };
-
+    case "CHANGE_DONATION":
+      return {
+        ...state,
+        donation: action.payload,
+      };
     default:
       throw new Error(`Unsupported action type ${action.type}`);
   }

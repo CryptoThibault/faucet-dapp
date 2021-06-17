@@ -10,6 +10,7 @@ export const useFaucet = () => {
     ownerAddress: "",
     erc20Address: "",
     amountReceived: "0",
+    donation: "0",
   });
   if (faucet === undefined) {
     throw new Error("You try to use ContractsContext outside of his provider");
