@@ -52,6 +52,7 @@ const History = () => {
             {txList.map((elem) => {
               return (
                 <Box
+                  key={`${elem.blockHash} & ${elem.blockNumber}`}
                   rounded="base"
                   p="0.50rem"
                   mb="0.5rem"

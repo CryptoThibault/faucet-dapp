@@ -1,8 +1,5 @@
 import {
   Text,
-  FormControl,
-  FormLabel,
-  Switch,
   Flex,
   InputGroup,
   Input,
@@ -179,6 +176,14 @@ const TokenAllowances = () => {
           />
         </InputGroup>
       </Flex>
+      {txStatus.startsWith("Failed") ? (
+        <Alert status="error">
+          <AlertIcon />
+          {txStatus}
+        </Alert>
+      ) : (
+        ""
+      )}
       {/* APPROVE UP DOWN TOTAL SUPLLY */}
     </>
   )

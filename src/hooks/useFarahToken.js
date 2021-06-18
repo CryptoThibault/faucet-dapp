@@ -24,6 +24,7 @@ export const useFarahToken = () => {
     amount: 0,
     txList: [],
     allowance: 0,
+    myBalance: "0",
   })
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export const useFarahToken = () => {
           let n = await farahtoken.name()
           let s = await farahtoken.symbol()
           let d = await farahtoken.decimals()
+          let b = await farahtoken.balanceOf(web3State.account)
 
           // filter all farahtoken transfers FROM the account
           let txOut = await farahtoken.filters.Transfer(web3State.account, null)
@@ -44,7 +46,16 @@ export const useFarahToken = () => {
           )
           // list all Transfer event to me
           txIn = await farahtoken.queryFilter(txIn)
-          dispatch({ type: "TOKEN_INFO", n, s, d, txOut, txIn })
+
+          dispatch({
+            type: "TOKEN_INFO",
+            n,
+            s,
+            d,
+            b: ethers.utils.formatEther(b.toString()),
+            txOut,
+            txIn,
+          })
         } catch (e) {
           console.log(e)
         }
@@ -82,7 +93,7 @@ export const useFarahToken = () => {
             )} to ${recipient}\nSee on EtherScan: TX_HASH`,
             status: "success",
             position: "bottom",
-            duration: "4000",
+            duration: "10000",
             isClosable: true,
           })
         }

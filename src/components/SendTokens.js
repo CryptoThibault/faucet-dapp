@@ -8,8 +8,6 @@ import {
   Input,
   InputLeftAddon,
   Button,
-  Alert,
-  AlertIcon,
   InputRightAddon,
 } from "@chakra-ui/react"
 import { ethers } from "ethers"
@@ -134,14 +132,6 @@ const SendTokens = () => {
           </Button>
         </InputGroup>
       </Flex>
-      {txStatus.startsWith("Failed") ? (
-        <Alert status="error">
-          <AlertIcon />
-          {txStatus}
-        </Alert>
-      ) : (
-        ""
-      )}
     </>
   )
 }

@@ -6,6 +6,7 @@ export const tokenReducer = (state, action) => {
         for (let elem of txIn) {
           let txHash = elem.getTransaction(this)
           txTab.push({
+            blockHash: elem.blockHash,
             blockNumber: elem.blockNumber,
             event: elem.event,
             amount: elem.args["value"].toString(),
@@ -32,6 +33,7 @@ export const tokenReducer = (state, action) => {
         tokenName: action.n,
         symbol: action.s,
         decimals: action.d,
+        myBalance: action.b,
         txList: historyList(action.txIn, action.txOut),
       }
 
@@ -74,7 +76,7 @@ export const tokenReducer = (state, action) => {
     case "TX_WAITING":
       return {
         ...state,
-        txStatus: "Waiting for comfirmation",
+        txStatus: "Waiting for confirmation",
       }
 
     case "TX_PENDING":
@@ -90,7 +92,6 @@ export const tokenReducer = (state, action) => {
       }
 
     case "TX_FAILURE":
-      console.log(action.payload.code)
       if (action.payload.code === "INVALID_ARGUMENT") {
         console.log("HEY YOU")
       }
