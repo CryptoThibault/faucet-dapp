@@ -38,7 +38,7 @@ const SendTokens = () => {
       }
       tokenDispatch({ type: "TX_PENDING" })
       await tx.wait()
-      tokenDispatch({ type: "TRANSFER_SUCCESS" })
+      tokenDispatch({ type: "TX_SUCCESS" })
     } catch (e) {
       console.log(e)
       tokenDispatch({ type: "TX_FAILURE", payload: e })

@@ -65,6 +65,12 @@ export const tokenReducer = (state, action) => {
         allowance: action.payload,
       }
 
+    case "CHANGE_AMOUNT_ALLOWANCE":
+      return {
+        ...state,
+        amount: action.payload,
+      }
+
     case "TX_WAITING":
       return {
         ...state,
@@ -77,13 +83,17 @@ export const tokenReducer = (state, action) => {
         txStatus: "Pending",
       }
 
-    case "TRANSFER_SUCCESS":
+    case "TX_SUCCESS":
       return {
         ...state,
         txStatus: "Success",
       }
 
     case "TX_FAILURE":
+      console.log(action.payload.code)
+      if (action.payload.code === "INVALID_ARGUMENT") {
+        console.log("HEY YOU")
+      }
       return {
         ...state,
         txStatus: `Failed with ${action.payload.message}`,

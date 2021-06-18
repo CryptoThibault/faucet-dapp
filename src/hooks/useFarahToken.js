@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer } from "react"
+import { useCallback, useContext, useEffect, useReducer } from "react"
 import { Web3Context } from "web3-hooks"
 import { ContractsContext } from "../contexts/ContractsContext"
 import { tokenReducer } from "../reducers/tokenReducer"
@@ -53,6 +53,24 @@ export const useFarahToken = () => {
     }
   }, [farahtoken, web3State.account])
 
+  const cb1 = useCallback(
+    (owner, spender, amount) => {
+      if (owner.toLowerCase() === web3State.account.toLowerCase()) {
+        toast({
+          title: "Approval done",
+          description: `${owner} approved ${spender} for ${ethers.utils.formatEther(
+            amount.toString()
+          )}\nSee on EtherScan: TX_HASH`,
+          status: "success",
+          position: "bottom",
+          duration: "4000",
+          isClosable: true,
+        })
+      }
+    },
+    [toast, web3State.account]
+  )
+
   useEffect(() => {
     if (farahtoken) {
       const cb = (sender, recipient, amount) => {
@@ -70,9 +88,13 @@ export const useFarahToken = () => {
         }
       }
       farahtoken.on("Transfer", cb)
-      return () => farahtoken.off("Transfer", cb)
+      farahtoken.on("Approval", cb1)
+      return () => {
+        farahtoken.off("Transfer", cb)
+        farahtoken.off("Approval", cb1)
+      }
     }
-  }, [farahtoken, toast, web3State.account])
+  }, [farahtoken, toast, web3State.account, cb1])
 
   if (farahtoken === undefined) {
     throw new Error(
