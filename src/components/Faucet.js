@@ -67,7 +67,7 @@ const Faucet = () => {
     faucetDispatch({
       type: "GET_TOKEN",
       payload: {
-        a: txA.toString(),
+        a: ethers.utils.formatEther(txA.toString()),
         b: txB.toString(),
       },
     });
